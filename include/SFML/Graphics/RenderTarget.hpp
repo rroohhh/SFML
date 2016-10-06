@@ -256,6 +256,23 @@ public:
     virtual Vector2u getSize() const = 0;
 
     ////////////////////////////////////////////////////////////
+    /// \brief Activate or deactivate the render target for rendering
+    ///
+    /// This function makes the render target's context current for
+    /// future OpenGL rendering operations (so you shouldn't care
+    /// about it if you're not doing direct OpenGL stuff).
+    /// Only one context can be current in a thread, so if you
+    /// want to draw OpenGL geometry to another render target
+    /// don't forget to activate it again.
+    ///
+    /// \param active True to activate, false to deactivate
+    ///
+    /// \return True if operation was successful, false otherwise
+    ///
+    ////////////////////////////////////////////////////////////
+    virtual bool setActive(bool active = true) = 0;
+
+    ////////////////////////////////////////////////////////////
     /// \brief Save the current OpenGL render states and matrices
     ///
     /// This function can be used when you mix SFML drawing
@@ -379,20 +396,6 @@ private:
     ///
     ////////////////////////////////////////////////////////////
     void applyShader(const Shader* shader);
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Activate the target for rendering
-    ///
-    /// This function must be implemented by derived classes to make
-    /// their OpenGL context current; it is called by the base class
-    /// everytime it's going to use OpenGL calls.
-    ///
-    /// \param active True to make the target active, false to deactivate it
-    ///
-    /// \return True if the function succeeded
-    ///
-    ////////////////////////////////////////////////////////////
-    virtual bool activate(bool active) = 0;
 
     ////////////////////////////////////////////////////////////
     /// \brief Render states cache
