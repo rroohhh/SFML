@@ -59,10 +59,14 @@ void SoundFileFactory::unregisterReader()
     // Remove the instance(s) of the reader from the array of factories
     for (ReaderFactoryArray::iterator it = s_readers.begin(); it != s_readers.end(); )
     {
+#ifdef __INTEL_COMPILER
+            it = s_writers.erase(it);
+#else
         if (it->create == &priv::createReader<T>)
-            it = s_readers.erase(it);
+           it = s_readers.erase(it);
         else
             ++it;
+#endif
     }
 }
 
@@ -90,10 +94,14 @@ void SoundFileFactory::unregisterWriter()
     // Remove the instance(s) of the writer from the array of factories
     for (WriterFactoryArray::iterator it = s_writers.begin(); it != s_writers.end(); )
     {
+#ifdef __INTEL_COMPILER
+            it = s_writers.erase(it);
+#else
         if (it->create == &priv::createWriter<T>)
             it = s_writers.erase(it);
         else
             ++it;
+#endif
     }
 }
 
