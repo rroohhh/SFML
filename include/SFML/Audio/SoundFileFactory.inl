@@ -60,7 +60,7 @@ void SoundFileFactory::unregisterReader()
     for (ReaderFactoryArray::iterator it = s_readers.begin(); it != s_readers.end(); )
     {
 #ifdef __INTEL_COMPILER
-            it = s_writers.erase(it);
+            ++it;
 #else
         if (it->create == &priv::createReader<T>)
            it = s_readers.erase(it);
@@ -95,7 +95,7 @@ void SoundFileFactory::unregisterWriter()
     for (WriterFactoryArray::iterator it = s_writers.begin(); it != s_writers.end(); )
     {
 #ifdef __INTEL_COMPILER
-            it = s_writers.erase(it);
+            ++it;
 #else
         if (it->create == &priv::createWriter<T>)
             it = s_writers.erase(it);
